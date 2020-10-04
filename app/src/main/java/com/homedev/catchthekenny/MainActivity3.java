@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -20,7 +21,7 @@ public class MainActivity3 extends AppCompatActivity {
     TextView textView, textView2;
     ImageView[] kenny, bomb;
     int countdown, time;
-    int score;
+    int score, hs_easy, hs_medium, hs_hard;
     int delay;
     String difficulty;
 
@@ -67,17 +68,21 @@ public class MainActivity3 extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {
                 int current_time = (int) millisUntilFinished / 1000;
+                if (current_time <= 5) textView.setTextColor(Color.RED);
                 textView.setText("Time: " + current_time);
 
                 if (current_time % 10 == 0 && difficulty.equals("Easy")) delay -= 100;
                 else if (current_time % 8 == 0 && difficulty.equals("Medium")) delay -= 50;
-                else if (current_time % 7 == 0 && difficulty.equals("Hard")) delay -= 50;
+                else if (current_time % 10 == 0 && difficulty.equals("Hard")) delay -= 50;
             }
 
             @Override
             public void onFinish() {
                 handler.removeCallbacks(runnable);
                 for (ImageView image : kenny) image.setVisibility(View.INVISIBLE);
+                for (ImageView image : bomb) image.setVisibility(View.INVISIBLE);
+
+                update_high_scores();
 
                 AlertDialog.Builder restart = new AlertDialog.Builder(MainActivity3.this);
                 restart.setTitle("Game over");
@@ -126,7 +131,7 @@ public class MainActivity3 extends AppCompatActivity {
                 int rnd1, rnd2 = random.nextInt(12);
                 if (difficulty.equals("Hard")) {
                     rnd1 = random.nextInt(101);
-                    if (rnd1 > 80) bomb[rnd2].setVisibility(View.VISIBLE);
+                    if (rnd1 > 90) bomb[rnd2].setVisibility(View.VISIBLE);
                     else kenny[rnd2].setVisibility(View.VISIBLE);
                 }
                 else kenny[rnd2].setVisibility(View.VISIBLE);
@@ -138,4 +143,29 @@ public class MainActivity3 extends AppCompatActivity {
         handler.post(runnable);
     }
 
+    private void update_high_scores() {
+        if (difficulty.equals("Easy")) {
+            hs_easy = sharedPreferences.getInt("score_easy", 0);
+            if (score > hs_easy) {
+                hs_easy = score;
+                sharedPreferences.edit().putInt("score_easy", hs_easy).apply();
+            }
+        }
+
+        else if (difficulty.equals("Medium")) {
+            hs_medium = sharedPreferences.getInt("score_medium", 0);
+            if (score > hs_medium) {
+                hs_medium = score;
+                sharedPreferences.edit().putInt("score_medium", hs_medium).apply();
+            }
+        }
+
+        else {
+            hs_hard = sharedPreferences.getInt("score_hard", 0);
+            if (score > hs_hard) {
+                hs_hard = score;
+                sharedPreferences.edit().putInt("score_hard", hs_hard).apply();
+            }
+        }
+    }
 }
