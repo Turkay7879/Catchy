@@ -21,6 +21,8 @@ public class MainActivity3 extends AppCompatActivity {
     ImageView[] images;
     int countdown, time;
     int score;
+    int delay;
+    String difficulty;
 
     SharedPreferences sharedPreferences;
     Handler handler;
@@ -50,12 +52,21 @@ public class MainActivity3 extends AppCompatActivity {
         countdown = intent.getIntExtra("time", 0);
         time = countdown * 1000;
 
+        difficulty = sharedPreferences.getString("last_difficulty", "");
+        if (difficulty.equals("Easy") || difficulty.equals("Medium")) delay = 750;
+        else delay = 500;
+
         hide_image();
 
         new CountDownTimer(time, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                textView.setText("Time: " + millisUntilFinished / 1000);
+                int current_time = (int) millisUntilFinished / 1000;
+                textView.setText("Time: " + current_time);
+
+                if (current_time % 10 == 0 && difficulty.equals("Easy")) delay -= 100;
+                else if (current_time % 8 == 0 && difficulty.equals("Medium")) delay -= 50;
+                else if (current_time % 7 == 0 && difficulty.equals("Hard")) delay -= 50;
             }
 
             @Override
@@ -103,7 +114,7 @@ public class MainActivity3 extends AppCompatActivity {
                 for (ImageView image : images) image.setVisibility(View.INVISIBLE);
                 int rnd = random.nextInt(12);
                 images[rnd].setVisibility(View.VISIBLE);
-                handler.postDelayed(this, 500);
+                handler.postDelayed(this,delay);
             }
         };
 
