@@ -22,6 +22,14 @@ public class MainActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        this.getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
         countdown = 20;
         intent = new Intent(MainActivity2.this, MainActivity3.class);
         sharedPreferences = getApplicationContext().getSharedPreferences("com.homedev.catchthekenny", MODE_PRIVATE);
@@ -51,5 +59,31 @@ public class MainActivity2 extends AppCompatActivity {
 
         intent.putExtra("time", countdown);
         startActivity(intent);
+    }
+
+    public void go_back(View view) {
+        Intent intent1 = new Intent(MainActivity2.this, MainActivity.class);
+        startActivity(intent1);
+    }
+
+    public void quit(View view) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity2.this);
+        alert.setTitle("Quit the game");
+        alert.setMessage("Are you sure you want to quit the game now?");
+
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishAffinity();
+            }
+        });
+
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        alert.show();
     }
 }
