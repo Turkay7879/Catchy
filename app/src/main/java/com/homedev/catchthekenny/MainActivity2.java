@@ -11,42 +11,42 @@ import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity2 extends AppCompatActivity {
-    int time;
+    int countdown;
     Intent intent;
-    String difficulty;
+    String game_difficulty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        time = 20;
+        countdown = 20;
         intent = new Intent(MainActivity2.this, MainActivity3.class);
     }
 
     public void level_easy(View view) {
-        difficulty = "Easy";
+        game_difficulty = "Easy";
 
-        intent.putExtra("time", time);
-        intent.putExtra("difficulty", difficulty);
+        intent.putExtra("time", countdown);
+        intent.putExtra("last_difficulty", game_difficulty);
         startActivity(intent);
     }
 
     public void level_medium(View view) {
-        difficulty = "Medium";
-        time = 40;
+        game_difficulty = "Medium";
+        countdown = 40;
 
-        intent.putExtra("time", time);
-        intent.putExtra("difficulty", difficulty);
+        intent.putExtra("time", countdown);
+        intent.putExtra("last_difficulty", game_difficulty);
         startActivity(intent);
     }
 
     public void level_hard(View view) {
-        difficulty = "Hard";
-        time = 60;
+        game_difficulty = "Hard";
+        countdown = 60;
 
-        intent.putExtra("time", time);
-        intent.putExtra("difficulty", difficulty);
+        intent.putExtra("time", countdown);
+        intent.putExtra("last_difficulty", game_difficulty);
         startActivity(intent);
     }
 }
