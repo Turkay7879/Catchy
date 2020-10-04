@@ -9,28 +9,48 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Random;
+
 public class MainActivity3 extends AppCompatActivity {
-    TextView textView;
+    TextView textView, textView2;
+    ImageView[] images;
     int countdown, time;
     int score;
-    String difficulty;
 
     SharedPreferences sharedPreferences;
+    Handler handler;
+    Runnable runnable;
+    Random random;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
 
+        random = new Random();
+
         textView = findViewById(R.id.textView_time);
+        textView2 = findViewById(R.id.textView_Score);
+
+        images = new ImageView[12];
+        images[0] = findViewById(R.id.kenny0); images[1] = findViewById(R.id.kenny1); images[2] = findViewById(R.id.kenny2);
+        images[3] = findViewById(R.id.kenny3); images[4] = findViewById(R.id.kenny4); images[5] = findViewById(R.id.kenny5);
+        images[6] = findViewById(R.id.kenny6); images[7] = findViewById(R.id.kenny7); images[8] = findViewById(R.id.kenny8);
+        images[9] = findViewById(R.id.kenny9); images[10] = findViewById(R.id.kenny10); images[11] = findViewById(R.id.kenny11);
+
         sharedPreferences = getApplicationContext().getSharedPreferences("com.homedev.catchthekenny", Context.MODE_PRIVATE);
         score = 0;
 
         Intent intent = getIntent();
         countdown = intent.getIntExtra("time", 0);
         time = countdown * 1000;
+
+        hide_image();
 
         new CountDownTimer(time, 1000) {
             @Override
@@ -40,6 +60,9 @@ public class MainActivity3 extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                handler.removeCallbacks(runnable);
+                for (ImageView image : images) image.setVisibility(View.INVISIBLE);
+
                 AlertDialog.Builder restart = new AlertDialog.Builder(MainActivity3.this);
                 restart.setTitle("Game over");
                 restart.setMessage("Your total score is: " + score + ". Would you like to try again?");
@@ -66,4 +89,25 @@ public class MainActivity3 extends AppCompatActivity {
             }
         }.start();
     }
+
+    public void increase_score(View view) {
+        score++;
+        textView2.setText("Score: " + score);
+    }
+
+    private void hide_image() {
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                for (ImageView image : images) image.setVisibility(View.INVISIBLE);
+                int rnd = random.nextInt(12);
+                images[rnd].setVisibility(View.VISIBLE);
+                handler.postDelayed(this, 500);
+            }
+        };
+
+        handler.post(runnable);
+    }
+
 }

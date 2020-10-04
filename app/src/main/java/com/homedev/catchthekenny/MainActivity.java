@@ -50,14 +50,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void check_Score(String mode, int last_score, int temp_hs) {
-        if (mode.equals("EASY")) {
+        if (mode.equals("Easy")) {
             if (last_score > temp_hs) hs_easy = last_score;
             else hs_easy = temp_hs;
             sharedPreferences.edit().putInt("score_easy", hs_easy).apply();
             textView1.setText("High Score (Easy): " + sharedPreferences.getInt("score_easy", 0));
         }
 
-        else if (mode.equals("MEDIUM")) {
+        else if (mode.equals("Medium")) {
             if (last_score > temp_hs) hs_medium = last_score;
             else hs_medium = temp_hs;
             sharedPreferences.edit().putInt("score_medium", hs_medium).apply();
@@ -73,6 +73,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void quit(View view) {
-        finish();
+        finishAffinity();
     }
 }
