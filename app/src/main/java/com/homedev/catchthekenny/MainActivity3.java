@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class MainActivity3 extends AppCompatActivity {
     TextView textView, textView2;
-    ImageView[] images;
+    ImageView[] kenny, bomb;
     int countdown, time;
     int score;
     int delay;
@@ -39,11 +39,16 @@ public class MainActivity3 extends AppCompatActivity {
         textView = findViewById(R.id.textView_time);
         textView2 = findViewById(R.id.textView_Score);
 
-        images = new ImageView[12];
-        images[0] = findViewById(R.id.kenny0); images[1] = findViewById(R.id.kenny1); images[2] = findViewById(R.id.kenny2);
-        images[3] = findViewById(R.id.kenny3); images[4] = findViewById(R.id.kenny4); images[5] = findViewById(R.id.kenny5);
-        images[6] = findViewById(R.id.kenny6); images[7] = findViewById(R.id.kenny7); images[8] = findViewById(R.id.kenny8);
-        images[9] = findViewById(R.id.kenny9); images[10] = findViewById(R.id.kenny10); images[11] = findViewById(R.id.kenny11);
+        kenny = new ImageView[12]; bomb = new ImageView[12];
+        kenny[0] = findViewById(R.id.kenny0); kenny[1] = findViewById(R.id.kenny1); kenny[2] = findViewById(R.id.kenny2);
+        kenny[3] = findViewById(R.id.kenny3); kenny[4] = findViewById(R.id.kenny4); kenny[5] = findViewById(R.id.kenny5);
+        kenny[6] = findViewById(R.id.kenny6); kenny[7] = findViewById(R.id.kenny7); kenny[8] = findViewById(R.id.kenny8);
+        kenny[9] = findViewById(R.id.kenny9); kenny[10] = findViewById(R.id.kenny10); kenny[11] = findViewById(R.id.kenny11);
+
+        bomb[0] = findViewById(R.id.bomb0); bomb[1] = findViewById(R.id.bomb1); bomb[2] = findViewById(R.id.bomb2);
+        bomb[3] = findViewById(R.id.bomb3); bomb[4] = findViewById(R.id.bomb4); bomb[5] = findViewById(R.id.bomb5);
+        bomb[6] = findViewById(R.id.bomb6); bomb[7] = findViewById(R.id.bomb7); bomb[8] = findViewById(R.id.bomb8);
+        bomb[9] = findViewById(R.id.bomb9); bomb[10] = findViewById(R.id.bomb10); bomb[11] = findViewById(R.id.bomb11);
 
         sharedPreferences = getApplicationContext().getSharedPreferences("com.homedev.catchthekenny", Context.MODE_PRIVATE);
         score = 0;
@@ -72,7 +77,7 @@ public class MainActivity3 extends AppCompatActivity {
             @Override
             public void onFinish() {
                 handler.removeCallbacks(runnable);
-                for (ImageView image : images) image.setVisibility(View.INVISIBLE);
+                for (ImageView image : kenny) image.setVisibility(View.INVISIBLE);
 
                 AlertDialog.Builder restart = new AlertDialog.Builder(MainActivity3.this);
                 restart.setTitle("Game over");
@@ -106,14 +111,26 @@ public class MainActivity3 extends AppCompatActivity {
         textView2.setText("Score: " + score);
     }
 
+    public void decrease_score(View view) {
+        score--;
+        textView2.setText("Score: " + score);
+    }
+
     private void hide_image() {
         handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
-                for (ImageView image : images) image.setVisibility(View.INVISIBLE);
-                int rnd = random.nextInt(12);
-                images[rnd].setVisibility(View.VISIBLE);
+                for (ImageView image : kenny) image.setVisibility(View.INVISIBLE);
+                for (ImageView image : bomb) image.setVisibility(View.INVISIBLE);
+                int rnd1, rnd2 = random.nextInt(12);
+                if (difficulty.equals("Hard")) {
+                    rnd1 = random.nextInt(101);
+                    if (rnd1 > 80) bomb[rnd2].setVisibility(View.VISIBLE);
+                    else kenny[rnd2].setVisibility(View.VISIBLE);
+                }
+                else kenny[rnd2].setVisibility(View.VISIBLE);
+
                 handler.postDelayed(this,delay);
             }
         };
