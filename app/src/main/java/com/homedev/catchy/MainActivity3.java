@@ -61,7 +61,7 @@ public class MainActivity3 extends AppCompatActivity {
         bomb[6] = findViewById(R.id.bomb6); bomb[7] = findViewById(R.id.bomb7); bomb[8] = findViewById(R.id.bomb8);
         bomb[9] = findViewById(R.id.bomb9); bomb[10] = findViewById(R.id.bomb10); bomb[11] = findViewById(R.id.bomb11);
 
-        sharedPreferences = getApplicationContext().getSharedPreferences("com.homedev.catchthekenny", Context.MODE_PRIVATE);
+        sharedPreferences = getApplicationContext().getSharedPreferences("com.homedev.catchy", Context.MODE_PRIVATE);
         score = 0;
 
         Intent intent = getIntent();
@@ -79,7 +79,7 @@ public class MainActivity3 extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 int current_time = (int) millisUntilFinished / 1000;
                 if (current_time <= 5) textView.setTextColor(Color.RED);
-                textView.setText("Time: " + current_time);
+                textView.setText("Kalan Süre: " + current_time);
 
                 if (current_time % 10 == 0 && difficulty.equals("Easy")) delay -= 100;
                 else if (current_time % 8 == 0 && difficulty.equals("Medium")) delay -= 50;
@@ -95,10 +95,10 @@ public class MainActivity3 extends AppCompatActivity {
                 update_high_scores();
 
                 AlertDialog.Builder restart = new AlertDialog.Builder(MainActivity3.this);
-                restart.setTitle("Game over");
-                restart.setMessage("Your total score is: " + score + ". Would you like to try again?");
+                restart.setTitle("Oyun Bitti");
+                restart.setMessage("Toplam skorun: " + score + ". Tekrar denemek ister misin?");
 
-                restart.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                restart.setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         sharedPreferences.edit().putInt("last_score", score).apply();
@@ -108,7 +108,7 @@ public class MainActivity3 extends AppCompatActivity {
                     }
                 });
 
-                restart.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                restart.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         score = 0;
