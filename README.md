@@ -16,3 +16,9 @@ Oyunun amacı, belirli bir süre içinde ekranın rastgele kısımlarına gelen 
   2. Yakalanacak nesnenin oyuncu tarafından seçilebilme özelliği
   3. Kullanıcının zorluk seviyesini kendi yaratabileceği, bir custom zorluk seviyesi
   4. Oyunun daha ilgi çekici gözükmesi için değişik görsel/ses efektleri
+
+## Oyundan Görüntüler (Geliştirildikçe değişiklikler olabilir)
+![Ana Ekran](https://github.com/wooozie69/Catchy/blob/main/images/ana_ekran.png)
+![Zorluk Seviyesi Seçme](https://github.com/wooozie69/Catchy/blob/main/images/zorluk_seviyeleri.png)
+![Oyun Ekranı](https://github.com/wooozie69/Catchy/blob/main/images/oyun.png)
+![Bitiş Ekranı](https://github.com/wooozie69/Catchy/blob/main/images/bitis_ekrani.png)
