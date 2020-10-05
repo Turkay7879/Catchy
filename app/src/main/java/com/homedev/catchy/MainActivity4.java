@@ -27,7 +27,7 @@ public class MainActivity4 extends AppCompatActivity {
 
     TextView textView, textView2;
     ImageView[] character, bomb;
-    GridLayout layout1, layout2, layout3;
+    GridLayout layout1, layout2, layout3, layout4;
 
     SharedPreferences sharedPreferences;
     Handler handler;
@@ -50,7 +50,9 @@ public class MainActivity4 extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
         sharedPreferences = getApplicationContext().getSharedPreferences("com.homedev.catchy", Context.MODE_PRIVATE);
-        score = 0; player_character = sharedPreferences.getString("character", "");
+        score = 0;
+        player_character = sharedPreferences.getString("character", "");
+        difficulty = sharedPreferences.getString("last_difficulty", "");
 
         textView = findViewById(R.id.textView_time);
         textView2 = findViewById(R.id.textView_Score);
@@ -58,7 +60,9 @@ public class MainActivity4 extends AppCompatActivity {
         layout1 = findViewById(R.id.grid_layout_elsa);
         layout2 = findViewById(R.id.grid_layout_anna);
         layout3 = findViewById(R.id.grid_layout_olaf);
+        layout4 = findViewById(R.id.grid_layout_obstacle);
 
+        if (!difficulty.equals("Hard")) layout4.setVisibility(View.INVISIBLE);
         if (player_character.equals("Elsa")) { layout2.setVisibility(View.INVISIBLE); layout3.setVisibility(View.INVISIBLE); }
         else if (player_character.equals("Anna")) { layout1.setVisibility(View.INVISIBLE); layout3.setVisibility(View.INVISIBLE); }
         else { layout1.setVisibility(View.INVISIBLE); layout2.setVisibility(View.INVISIBLE); }
@@ -70,7 +74,7 @@ public class MainActivity4 extends AppCompatActivity {
         countdown = intent.getIntExtra("time", 0);
         time = countdown * 1000;
 
-        difficulty = sharedPreferences.getString("last_difficulty", "");
+
         if (difficulty.equals("Easy") || difficulty.equals("Medium")) delay = 750;
         else delay = 500;
 
@@ -204,9 +208,11 @@ public class MainActivity4 extends AppCompatActivity {
             character[9] = findViewById(R.id.olaf9); character[10] = findViewById(R.id.olaf10); character[11] = findViewById(R.id.olaf11);
         }
 
-        bomb[0] = findViewById(R.id.bomb0); bomb[1] = findViewById(R.id.bomb1); bomb[2] = findViewById(R.id.bomb2);
-        bomb[3] = findViewById(R.id.bomb3); bomb[4] = findViewById(R.id.bomb4); bomb[5] = findViewById(R.id.bomb5);
-        bomb[6] = findViewById(R.id.bomb6); bomb[7] = findViewById(R.id.bomb7); bomb[8] = findViewById(R.id.bomb8);
-        bomb[9] = findViewById(R.id.bomb9); bomb[10] = findViewById(R.id.bomb10); bomb[11] = findViewById(R.id.bomb11);
+        if (difficulty.equals("Hard")) {
+            bomb[0] = findViewById(R.id.bomb0); bomb[1] = findViewById(R.id.bomb1); bomb[2] = findViewById(R.id.bomb2);
+            bomb[3] = findViewById(R.id.bomb3); bomb[4] = findViewById(R.id.bomb4); bomb[5] = findViewById(R.id.bomb5);
+            bomb[6] = findViewById(R.id.bomb6); bomb[7] = findViewById(R.id.bomb7); bomb[8] = findViewById(R.id.bomb8);
+            bomb[9] = findViewById(R.id.bomb9); bomb[10] = findViewById(R.id.bomb10); bomb[11] = findViewById(R.id.bomb11);
+        }
     }
 }
