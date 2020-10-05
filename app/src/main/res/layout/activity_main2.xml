@@ -6,105 +6,55 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity2">
 
+
     <TextView
-        android:id="@+id/textView_time"
+        android:id="@+id/textView_character"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"
-        android:text="Bir zorluk seviyesi seçin"
+        android:text="Oynamak istediğin karaktere bas"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/select_easy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <GridLayout
+        android:id="@+id/character_options"
+        android:layout_width="360dp"
+        android:layout_height="200dp"
         android:layout_marginTop="50dp"
-        android:onClick="level_easy"
-        android:text="KOLAY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_time" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_character">
 
-    <Button
-        android:id="@+id/select_medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:onClick="level_medium"
-        android:text="ORTA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_easy" />
+        <ImageView
+            android:id="@+id/image1"
+            android:src="@drawable/elsa"
+            android:layout_width="120dp"
+            android:layout_height="150dp"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_marginTop="40dp"
+            android:onClick="choose"></ImageView>
 
-    <Button
-        android:id="@+id/select_hard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:onClick="level_hard"
-        android:text="ZOR"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_medium" />
+        <ImageView
+            android:id="@+id/image2"
+            android:src="@drawable/anna"
+            android:layout_width="120dp"
+            android:layout_height="200dp"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_marginTop="20dp"
+            android:onClick="choose"></ImageView>
 
-    <TextView
-        android:id="@+id/textView_easyExpl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="20 saniyede elinden geleni yap"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_easy" />
-
-    <TextView
-        android:id="@+id/textView_mediumExpl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="Bu sefer 40 saniye, ama daha da hızlı"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_medium" />
-
-    <TextView
-        android:id="@+id/textView_hardExpl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="60 saniyede yüksek hızla engelleri de aşmaya çalış"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_hard" />
-
-    <Button
-        android:id="@+id/go_back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="go_back"
-        android:text="GERİ GİT"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/select_hard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_hardExpl" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="quit"
-        android:text="ÇIK"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/select_hard"
-        app:layout_constraintTop_toBottomOf="@+id/textView_hardExpl" />
+        <ImageView
+            android:id="@+id/image3"
+            android:src="@drawable/olaf"
+            android:layout_width="120dp"
+            android:layout_height="240dp"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:onClick="choose"></ImageView>
+    </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,25 +19,16 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class MainActivity3 extends AppCompatActivity {
-    int countdown, time;
-    int score, hs_easy, hs_medium, hs_hard;
-    int delay;
-    String difficulty;
+    int countdown;
+    String game_difficulty, player_character;
 
-    TextView textView, textView2;
-    ImageView[] kenny, bomb;
-
+    Intent intent;
     SharedPreferences sharedPreferences;
-    Handler handler;
-    Runnable runnable;
-    Random random;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
-
-        random = new Random();
 
         this.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -47,138 +38,64 @@ public class MainActivity3 extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
-        textView = findViewById(R.id.textView_time);
-        textView2 = findViewById(R.id.textView_Score);
 
-        kenny = new ImageView[12]; bomb = new ImageView[12];
-        kenny[0] = findViewById(R.id.kenny0); kenny[1] = findViewById(R.id.kenny1); kenny[2] = findViewById(R.id.kenny2);
-        kenny[3] = findViewById(R.id.kenny3); kenny[4] = findViewById(R.id.kenny4); kenny[5] = findViewById(R.id.kenny5);
-        kenny[6] = findViewById(R.id.kenny6); kenny[7] = findViewById(R.id.kenny7); kenny[8] = findViewById(R.id.kenny8);
-        kenny[9] = findViewById(R.id.kenny9); kenny[10] = findViewById(R.id.kenny10); kenny[11] = findViewById(R.id.kenny11);
+        intent = new Intent(MainActivity3.this, MainActivity4.class);
+        sharedPreferences = getApplicationContext().getSharedPreferences("com.homedev.catchy", MODE_PRIVATE);
 
-        bomb[0] = findViewById(R.id.bomb0); bomb[1] = findViewById(R.id.bomb1); bomb[2] = findViewById(R.id.bomb2);
-        bomb[3] = findViewById(R.id.bomb3); bomb[4] = findViewById(R.id.bomb4); bomb[5] = findViewById(R.id.bomb5);
-        bomb[6] = findViewById(R.id.bomb6); bomb[7] = findViewById(R.id.bomb7); bomb[8] = findViewById(R.id.bomb8);
-        bomb[9] = findViewById(R.id.bomb9); bomb[10] = findViewById(R.id.bomb10); bomb[11] = findViewById(R.id.bomb11);
+        countdown = 20;
+        player_character = sharedPreferences.getString("character", "");
+        Toast.makeText(this, player_character + " seçildi!", Toast.LENGTH_SHORT).show();
+    }
 
-        sharedPreferences = getApplicationContext().getSharedPreferences("com.homedev.catchy", Context.MODE_PRIVATE);
-        score = 0;
+    public void level_easy(View view) {
+        game_difficulty = "Easy";
+        sharedPreferences.edit().putString("last_difficulty", game_difficulty).apply();
 
-        Intent intent = getIntent();
-        countdown = intent.getIntExtra("time", 0);
-        time = countdown * 1000;
+        intent.putExtra("time", countdown);
+        startActivity(intent);
+    }
 
-        difficulty = sharedPreferences.getString("last_difficulty", "");
-        if (difficulty.equals("Easy") || difficulty.equals("Medium")) delay = 750;
-        else delay = 500;
+    public void level_medium(View view) {
+        game_difficulty = "Medium";
+        sharedPreferences.edit().putString("last_difficulty", game_difficulty).apply();
+        countdown = 40;
 
-        hide_image();
+        intent.putExtra("time", countdown);
+        startActivity(intent);
+    }
 
-        new CountDownTimer(time, 1000) {
+    public void level_hard(View view) {
+        game_difficulty = "Hard";
+        sharedPreferences.edit().putString("last_difficulty", game_difficulty).apply();
+        countdown = 60;
+
+        intent.putExtra("time", countdown);
+        startActivity(intent);
+    }
+
+    public void go_back(View view) {
+        Intent intent1 = new Intent(MainActivity3.this, MainActivity.class);
+        startActivity(intent1);
+    }
+
+    public void quit(View view) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity3.this);
+        alert.setTitle("Oyundan Çık");
+        alert.setMessage("Oyundan şimdi çıkmak istediğine emin misin?");
+
+        alert.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
             @Override
-            public void onTick(long millisUntilFinished) {
-                int current_time = (int) millisUntilFinished / 1000;
-                if (current_time <= 5) textView.setTextColor(Color.RED);
-                textView.setText("Kalan Süre: " + current_time);
-
-                if (current_time % 10 == 0 && difficulty.equals("Easy")) delay -= 100;
-                else if (current_time % 8 == 0 && difficulty.equals("Medium")) delay -= 50;
-                else if (current_time % 10 == 0 && difficulty.equals("Hard")) delay -= 50;
+            public void onClick(DialogInterface dialog, int which) {
+                finishAffinity();
             }
+        });
 
+        alert.setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
             @Override
-            public void onFinish() {
-                handler.removeCallbacks(runnable);
-                for (ImageView image : kenny) image.setVisibility(View.INVISIBLE);
-                for (ImageView image : bomb) image.setVisibility(View.INVISIBLE);
+            public void onClick(DialogInterface dialog, int which) {
 
-                update_high_scores();
-
-                AlertDialog.Builder restart = new AlertDialog.Builder(MainActivity3.this);
-                restart.setTitle("Oyun Bitti");
-                restart.setMessage("Toplam skorun: " + score + ". Tekrar denemek ister misin?");
-
-                restart.setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        sharedPreferences.edit().putInt("last_score", score).apply();
-
-                        Intent intent1 = new Intent(MainActivity3.this, MainActivity.class);
-                        startActivity(intent1);
-                    }
-                });
-
-                restart.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        score = 0;
-                        Intent intent2 = new Intent(MainActivity3.this, MainActivity2.class);
-                        startActivity(intent2);
-                    }
-                });
-                restart.show();
             }
-        }.start();
-    }
-
-    public void increase_score(View view) {
-        score++;
-        textView2.setText("Skor: " + score);
-    }
-
-    public void decrease_score(View view) {
-        score--;
-        textView2.setText("Skor: " + score);
-    }
-
-    private void hide_image() {
-        handler = new Handler();
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                for (ImageView image : kenny) image.setVisibility(View.INVISIBLE);
-                for (ImageView image : bomb) image.setVisibility(View.INVISIBLE);
-                int rnd1, rnd2 = random.nextInt(12);
-                if (difficulty.equals("Hard")) {
-                    rnd1 = random.nextInt(101);
-                    if (rnd1 > 90) bomb[rnd2].setVisibility(View.VISIBLE);
-                    else kenny[rnd2].setVisibility(View.VISIBLE);
-                }
-                else kenny[rnd2].setVisibility(View.VISIBLE);
-
-                handler.postDelayed(this,delay);
-            }
-        };
-
-        handler.post(runnable);
-    }
-
-    private void update_high_scores() {
-        if (difficulty.equals("Easy")) {
-            hs_easy = sharedPreferences.getInt("score_easy", 0);
-            if (score > hs_easy) {
-                hs_easy = score;
-                sharedPreferences.edit().putInt("score_easy", hs_easy).apply();
-                Toast.makeText(MainActivity3.this, "Yeni bir yüksek skor!", Toast.LENGTH_LONG).show();
-            }
-        }
-
-        else if (difficulty.equals("Medium")) {
-            hs_medium = sharedPreferences.getInt("score_medium", 0);
-            if (score > hs_medium) {
-                hs_medium = score;
-                sharedPreferences.edit().putInt("score_medium", hs_medium).apply();
-                Toast.makeText(MainActivity3.this, "Yeni bir yüksek skor!", Toast.LENGTH_LONG).show();
-            }
-        }
-
-        else {
-            hs_hard = sharedPreferences.getInt("score_hard", 0);
-            if (score > hs_hard) {
-                hs_hard = score;
-                sharedPreferences.edit().putInt("score_hard", hs_hard).apply();
-                Toast.makeText(MainActivity3.this, "Yeni bir yüksek skor!", Toast.LENGTH_LONG).show();
-            }
-        }
+        });
+        alert.show();
     }
 }

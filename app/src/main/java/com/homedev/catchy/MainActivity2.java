@@ -8,13 +8,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 public class MainActivity2 extends AppCompatActivity {
-    int countdown;
-    String game_difficulty;
-
-    Intent intent;
+    String player_character;
+    AlertDialog.Builder alert;
     SharedPreferences sharedPreferences;
+    Intent intent;
+
+    int id_elsa, id_anna, id_olaf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,56 +31,30 @@ public class MainActivity2 extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
-
-        intent = new Intent(MainActivity2.this, MainActivity3.class);
+        player_character = "";
+        id_elsa = R.id.image1; id_anna = R.id.image2; id_olaf = R.id.image3;
         sharedPreferences = getApplicationContext().getSharedPreferences("com.homedev.catchy", MODE_PRIVATE);
 
-        countdown = 20;
+        alert = new AlertDialog.Builder(MainActivity2.this);
+        alert.setTitle("Karakteri Onayla");
     }
 
-    public void level_easy(View view) {
-        game_difficulty = "Easy";
-        sharedPreferences.edit().putString("last_difficulty", game_difficulty).apply();
+    public void choose(View view) {
+        final int id = view.getId();
 
-        intent.putExtra("time", countdown);
-        startActivity(intent);
-    }
+        if (id == id_anna) player_character = "Anna";
+        else if (id == id_elsa) player_character = "Elsa";
+        else player_character = "Olaf";
 
-    public void level_medium(View view) {
-        game_difficulty = "Medium";
-        sharedPreferences.edit().putString("last_difficulty", game_difficulty).apply();
-        countdown = 40;
-
-        intent.putExtra("time", countdown);
-        startActivity(intent);
-    }
-
-    public void level_hard(View view) {
-        game_difficulty = "Hard";
-        sharedPreferences.edit().putString("last_difficulty", game_difficulty).apply();
-        countdown = 60;
-
-        intent.putExtra("time", countdown);
-        startActivity(intent);
-    }
-
-    public void go_back(View view) {
-        Intent intent1 = new Intent(MainActivity2.this, MainActivity.class);
-        startActivity(intent1);
-    }
-
-    public void quit(View view) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity2.this);
-        alert.setTitle("Oyundan Çık");
-        alert.setMessage("Oyundan şimdi çıkmak istediğine emin misin?");
-
+        alert.setMessage(player_character + " ile oynamak istediğine emin misin?");
         alert.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                finishAffinity();
+                sharedPreferences.edit().putString("character", player_character).apply();
+                intent = new Intent(MainActivity2.this, MainActivity3.class);
+                startActivity(intent);
             }
         });
-
         alert.setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
