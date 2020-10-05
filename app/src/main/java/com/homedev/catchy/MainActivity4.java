@@ -96,11 +96,12 @@ public class MainActivity4 extends AppCompatActivity {
             public void onFinish() {
                 handler.removeCallbacks(runnable);
                 for (ImageView image : character) image.setVisibility(View.INVISIBLE);
-                for (ImageView image : bomb) image.setVisibility(View.INVISIBLE);
+                if (difficulty.equals("Hard")) for (ImageView image : bomb) image.setVisibility(View.INVISIBLE);
 
                 update_high_scores();
 
                 AlertDialog.Builder restart = new AlertDialog.Builder(MainActivity4.this);
+                restart.setCancelable(false);
                 restart.setTitle("Oyun Bitti");
                 restart.setMessage("Toplam skorun: " + score + ". Tekrar denemek ister misin?");
 
@@ -143,7 +144,7 @@ public class MainActivity4 extends AppCompatActivity {
             @Override
             public void run() {
                 for (ImageView image : character) image.setVisibility(View.INVISIBLE);
-                for (ImageView image : bomb) image.setVisibility(View.INVISIBLE);
+                if (difficulty.equals("Hard")) for (ImageView image : bomb) image.setVisibility(View.INVISIBLE);
                 int rnd1, rnd2 = random.nextInt(12);
                 if (difficulty.equals("Hard")) {
                     rnd1 = random.nextInt(101);

@@ -63,4 +63,30 @@ public class MainActivity2 extends AppCompatActivity {
         });
         alert.show();
     }
+
+    public void go_back(View view) {
+        Intent intent1 = new Intent(MainActivity2.this, MainActivity.class);
+        startActivity(intent1);
+    }
+
+    public void quit(View view) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity2.this);
+        alert.setTitle("Oyundan Çık");
+        alert.setMessage("Oyundan şimdi çıkmak istediğine emin misin?");
+
+        alert.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishAffinity();
+            }
+        });
+
+        alert.setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        alert.show();
+    }
 }

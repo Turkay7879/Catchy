@@ -74,7 +74,7 @@ public class MainActivity3 extends AppCompatActivity {
     }
 
     public void go_back(View view) {
-        Intent intent1 = new Intent(MainActivity3.this, MainActivity.class);
+        Intent intent1 = new Intent(MainActivity3.this, MainActivity2.class);
         startActivity(intent1);
     }
 

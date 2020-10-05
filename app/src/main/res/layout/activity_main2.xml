@@ -4,57 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/test2"
     tools:context=".MainActivity2">
 
-
-    <TextView
-        android:id="@+id/textView_character"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
-        android:text="Oynamak istediğin karaktere bas"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <GridLayout
         android:id="@+id/character_options"
         android:layout_width="360dp"
         android:layout_height="200dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_character">
+        app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
         <ImageView
             android:id="@+id/image1"
-            android:src="@drawable/elsa"
             android:layout_width="120dp"
             android:layout_height="150dp"
             android:layout_row="0"
             android:layout_column="0"
             android:layout_marginTop="40dp"
-            android:onClick="choose"></ImageView>
+            android:onClick="choose"
+            android:src="@drawable/elsa"></ImageView>
 
         <ImageView
             android:id="@+id/image2"
-            android:src="@drawable/anna"
             android:layout_width="120dp"
             android:layout_height="200dp"
             android:layout_row="0"
             android:layout_column="1"
             android:layout_marginTop="20dp"
-            android:onClick="choose"></ImageView>
+            android:onClick="choose"
+            android:src="@drawable/anna"></ImageView>
 
         <ImageView
             android:id="@+id/image3"
-            android:src="@drawable/olaf"
             android:layout_width="120dp"
             android:layout_height="240dp"
             android:layout_row="0"
             android:layout_column="2"
-            android:onClick="choose"></ImageView>
+            android:onClick="choose"
+            android:src="@drawable/olaf"></ImageView>
+
     </GridLayout>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/title_character" />
+
+    <Button
+        android:id="@+id/go_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:onClick="go_back"
+        android:text="GERİ GİT"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="75dp"
+        android:layout_marginBottom="50dp"
+        android:onClick="quit"
+        android:text="ÇIK"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
