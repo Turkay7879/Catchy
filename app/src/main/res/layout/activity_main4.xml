@@ -154,7 +154,7 @@
     </GridLayout>
 
     <GridLayout
-        android:id="@+id/grid_layout_elsa"
+        android:id="@+id/grid_layout_charactermain"
         android:layout_width="360dp"
         android:layout_height="480dp"
         android:layout_marginStart="1dp"

@@ -57,15 +57,12 @@ public class MainActivity4 extends AppCompatActivity {
         textView = findViewById(R.id.textView_time);
         textView2 = findViewById(R.id.textView_Score);
 
-        layout1 = findViewById(R.id.grid_layout_elsa);
+        layout1 = findViewById(R.id.grid_layout_charactermain);
         layout2 = findViewById(R.id.grid_layout_anna);
         layout3 = findViewById(R.id.grid_layout_olaf);
         layout4 = findViewById(R.id.grid_layout_obstacle);
-
         if (!difficulty.equals("Hard")) layout4.setVisibility(View.INVISIBLE);
-        if (player_character.equals("Elsa")) { layout2.setVisibility(View.INVISIBLE); layout3.setVisibility(View.INVISIBLE); }
-        else if (player_character.equals("Anna")) { layout1.setVisibility(View.INVISIBLE); layout3.setVisibility(View.INVISIBLE); }
-        else { layout1.setVisibility(View.INVISIBLE); layout2.setVisibility(View.INVISIBLE); }
+        layout2.setVisibility(View.INVISIBLE); layout3.setVisibility(View.INVISIBLE);
 
         character = new ImageView[12]; bomb = new ImageView[12];
         fill_image_arrays();
@@ -73,7 +70,6 @@ public class MainActivity4 extends AppCompatActivity {
         Intent intent = getIntent();
         countdown = intent.getIntExtra("time", 0);
         time = countdown * 1000;
-
 
         if (difficulty.equals("Easy") || difficulty.equals("Medium")) delay = 750;
         else delay = 500;
@@ -190,24 +186,13 @@ public class MainActivity4 extends AppCompatActivity {
     }
 
     private void fill_image_arrays() {
-        if (player_character.equals("Elsa")) {
-            character[0] = findViewById(R.id.elsa0); character[1] = findViewById(R.id.elsa1); character[2] = findViewById(R.id.elsa2);
-            character[3] = findViewById(R.id.elsa3); character[4] = findViewById(R.id.elsa4); character[5] = findViewById(R.id.elsa5);
-            character[6] = findViewById(R.id.elsa6); character[7] = findViewById(R.id.elsa7); character[8] = findViewById(R.id.elsa8);
-            character[9] = findViewById(R.id.elsa9); character[10] = findViewById(R.id.elsa10); character[11] = findViewById(R.id.elsa11);
-        }
-        else if (player_character.equals("Anna")) {
-            character[0] = findViewById(R.id.anna0); character[1] = findViewById(R.id.anna1); character[2] = findViewById(R.id.anna2);
-            character[3] = findViewById(R.id.anna3); character[4] = findViewById(R.id.anna4); character[5] = findViewById(R.id.anna5);
-            character[6] = findViewById(R.id.anna6); character[7] = findViewById(R.id.anna7); character[8] = findViewById(R.id.anna8);
-            character[9] = findViewById(R.id.anna9); character[10] = findViewById(R.id.anna10); character[11] = findViewById(R.id.anna11);
-        }
-        else if (player_character.equals("Olaf")) {
-            character[0] = findViewById(R.id.olaf0); character[1] = findViewById(R.id.olaf1); character[2] = findViewById(R.id.olaf2);
-            character[3] = findViewById(R.id.olaf3); character[4] = findViewById(R.id.olaf4); character[5] = findViewById(R.id.olaf5);
-            character[6] = findViewById(R.id.olaf6); character[7] = findViewById(R.id.olaf7); character[8] = findViewById(R.id.olaf8);
-            character[9] = findViewById(R.id.olaf9); character[10] = findViewById(R.id.olaf10); character[11] = findViewById(R.id.olaf11);
-        }
+        character[0] = findViewById(R.id.elsa0); character[1] = findViewById(R.id.elsa1); character[2] = findViewById(R.id.elsa2);
+        character[3] = findViewById(R.id.elsa3); character[4] = findViewById(R.id.elsa4); character[5] = findViewById(R.id.elsa5);
+        character[6] = findViewById(R.id.elsa6); character[7] = findViewById(R.id.elsa7); character[8] = findViewById(R.id.elsa8);
+        character[9] = findViewById(R.id.elsa9); character[10] = findViewById(R.id.elsa10); character[11] = findViewById(R.id.elsa11);
+
+        if (player_character.equals("Anna")) for (ImageView imageView : character) imageView.setImageResource(R.drawable.anna);
+        else if (player_character.equals("Olaf")) for (ImageView imageView : character) imageView.setImageResource(R.drawable.olaf);
 
         if (difficulty.equals("Hard")) {
             bomb[0] = findViewById(R.id.bomb0); bomb[1] = findViewById(R.id.bomb1); bomb[2] = findViewById(R.id.bomb2);
